@@ -3,174 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday My Love 💖</title>
+    <title>Happy Birthday Shell ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Sukhumvit Set', 'Segoe UI', Tahoma, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #ffe6eb 0%, #ffd1dc 50%, #fff0f5 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            padding: 20px;
+            color: #4a4a4a;
+            position: relative;
             overflow-x: hidden;
         }
 
-        .container {
-            width: 90%;
-            max-width: 450px;
-            padding: 20px;
+        .bg-heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.25);
+            font-size: 20px;
+            animation: floatUp 8s infinite linear;
+            pointer-events: none;
+            z-index: 1;
         }
 
-        /* หน้าแรก: ปุ่มกดเปิด */
-        #start-screen {
-            background: rgba(255, 255, 255, 0.85);
-            padding: 40px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0.8) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
         }
 
-        .gift-box {
-            font-size: 80px;
-            cursor: pointer;
-            animation: bounce 1.5s infinite;
-            margin-bottom: 15px;
-        }
-
-        .open-btn {
-            background: #ff6b81;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.4);
-            transition: transform 0.2s;
-        }
-
-        .open-btn:hover {
-            transform: scale(1.05);
-        }
-
-        /* หน้าสอง: การ์ดอวยพร */
-        #card-screen {
-            display: none;
-            background: white;
-            padding: 30px 20px;
-            border-radius: 20px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .photo-frame {
+        .card-container {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            box-shadow: 0 15px 35px rgba(230, 100, 140, 0.2);
             width: 100%;
-            height: 280px;
-            border-radius: 15px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 480px;
+            padding: 30px 24px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            border: 2px solid #fff;
         }
 
-        .photo-frame img {
+        .badge {
+            display: inline-block;
+            background: #ff758f;
+            color: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(255, 117, 143, 0.3);
+        }
+
+        h1 {
+            font-family: 'Mali', cursive;
+            color: #ff477e;
+            font-size: 2rem;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(255, 182, 193, 0.4);
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        /* Gallery / Slideshow */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            margin-bottom: 16px;
+            border: 4px solid #fff;
+            background-color: #f8f8f8;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+            transform: scale(1.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        h1 {
-            color: #ff4757;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.85);
+            color: #ff477e;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.2s;
+            z-index: 10;
         }
 
-        p.message {
-            color: #57606f;
-            line-height: 1.6;
-            font-size: 1rem;
+        .nav-btn:hover {
+            background: #ff477e;
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev { left: 12px; }
+        .next { right: 12px; }
+
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
             margin-bottom: 20px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ffd1dc;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: #ff477e;
+            width: 24px;
+            border-radius: 10px;
+        }
+
+        /* Wish Box */
+        .wish-box {
+            background: #fff0f3;
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px dashed #ffb3c1;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .wish-text {
+            font-family: 'Mali', cursive;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #5c3d46;
             white-space: pre-line;
         }
 
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+        .interactive-btn {
+            background: linear-gradient(45deg, #ff477e, #ff758f);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            font-family: 'Prompt', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 71, 126, 0.35);
+            transition: all 0.3s;
+            width: 100%;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .interactive-btn:hover {
+            transform: translateY(-2deg);
+            box-shadow: 0 12px 24px rgba(255, 71, 126, 0.45);
         }
 
-        /* เอฟเฟกต์หัวใจปลิว */
-        .heart {
+        /* Surprise Popup */
+        .popup {
+            display: none;
             position: fixed;
-            font-size: 20px;
-            color: #ff4757;
-            animation: floatUp 4s linear infinite;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
             z-index: 100;
-            pointer-events: none;
+            padding: 20px;
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        .popup-content {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 360px;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .popup h2 {
+            font-family: 'Mali', cursive;
+            color: #ff477e;
+            margin-bottom: 12px;
+        }
+
+        .popup p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .close-btn {
+            background: #ff758f;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- หน้าแรกก่อนเปิด -->
-        <div id="start-screen">
-            <div class="gift-box" onclick="openCard()">🎁</div>
-            <h2 style="color: #2f3542; margin-bottom: 15px;">มีของขวัญส่งมาถึงคุณ!</h2>
-            <button class="open-btn" onclick="openCard()">กดเปิดตรงนี้เลย ❤️</button>
+    <script>
+        for(let i=0; i<15; i++) {
+            let heart = document.createElement('div');
+            heart.className = 'bg-heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
+            document.body.appendChild(heart);
+        }
+    </script>
+
+    <div class="card-container">
+        <span class="badge">Happy Birthday! 🎂</span>
+        <h1>สุขสันต์วันเกิดนะเชลล์ ❤️</h1>
+        <p class="subtitle">From... กิ คนตั้งใจของเธอ</p>
+
+        <!-- Slideshow Gallery -->
+        <div class="gallery-container">
+            <div class="slide active">
+                <img src="photo1.jpg" alt="รูปเชลล์ 1" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=600&auto=format&fit=crop'">
+            </div>
+            <div class="slide">
+                <img src="photo2.jpg" alt="รูปเชลล์ 2" onerror="this.src='https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=600&auto=format&fit=crop'">
+            </div>
+            <div class="slide">
+                <img src="photo3.jpg" alt="รูปเชลล์ 3" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&auto=format&fit=crop'">
+            </div>
+            <div class="slide">
+                <img src="photo4.jpg" alt="รูปเชลล์ 4" onerror="this.src='https://images.unsplash.com/photo-1494774157365-9e04c6720e47?w=600&auto=format&fit=crop'">
+            </div>
+
+            <button class="nav-btn prev" onclick="changeSlide(-1)">❮</button>
+            <button class="nav-btn next" onclick="changeSlide(1)">❯</button>
         </div>
 
-        <!-- หน้าเนื้อหาการ์ดอวยพร -->
-        <div id="card-screen">
-            <div class="photo-frame">
-                <!-- ดึงไฟล์ image.png ที่อัปโหลดใน GitHub มาแสดง -->
-                <img src="image.png" alt="Our Memory">
+        <div class="dots-container">
+            <span class="dot active" onclick="currentSlide(0)"></span>
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+
+        <!-- Wish Text -->
+        <div class="wish-box">
+            <div class="wish-text">
+ขอให้ปีนี้เชลล์มีความสุขมากๆ สุขภาพแข็งแรง คิดสิ่งไหนก็ขอให้สมปรารถนาในทุกเรื่องเลยนะ แล้วก็ขอให้มีเรื่องที่ทำให้ยิ้มกว้างๆ ได้ในทุกๆ วันด้วย ✨
+
+จริงๆ รู้สึกเหมือนได้เจอเชลล์ในเวอร์ชันที่โตขึ้น น่ารักขึ้น แต่บอกไว้เลยนะว่ารอบนี้กิตั้งใจมากๆ! 💕
+
+ขอให้วันเกิดปีนี้เต็มไปด้วยความทรงจำดีๆ นะ ส่วนของขวัญวันเกิด นอกจากคำอวยพรแล้ว ถ้าเชลล์อยากได้คนดูแลหัวใจดีๆ สักคน บอกกิได้ตลอด 24 ชั่วโมงเลยนะ!
+
+มีความสุขมากๆ นะ รักนะไอหอยของเค้าาาาาา 🐚❤️
             </div>
-            <h1>Happy Birthday นะคะคนดี 🎂</h1>
-            <p class="message">
-                สุขสันต์วันเกิดนะแฟน มีความสุขมากๆ ในทุกๆ วัน
-                ขอบคุณที่เข้ามาเป็นรอยยิ้มและความสุขให้กันเสมอ
-                ขอให้ปีนี้เป็นปีที่ดี สมหวังในทุกเรื่องที่ตั้งใจ
-                รักและจะอยู่เคียงข้างแบบนี้ไปนานๆ เลยนะ ❤️
-            </p>
+        </div>
+
+        <button class="interactive-btn" onclick="showSurprise()">กดตรงนี้สิมีข้อความลับ! ✨</button>
+    </div>
+
+    <!-- Surprise Popup -->
+    <div class="popup" id="surprisePopup">
+        <div class="popup-content">
+            <h2>บริการ 24 ชั่วโมงพร้อมใช้งาน! 📞❤️</h2>
+            <p>คนดูแลหัวใจพร้อมให้บริการตลอดเวลาแล้วนะครับ ไม่ว่าจะงอแง เหงา หรืออยากได้กำลังใจ สะกิดกิได้ทุกเมื่อเลยนะ!</p>
+            <button class="close-btn" onclick="closeSurprise()">รับทราบแล้วครับ 🥰</button>
         </div>
     </div>
 
     <script>
-        function openCard() {
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('card-screen').style.display = 'block';
-            createHearts();
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(index) {
+            if (index >= slides.length) currentSlideIndex = 0;
+            if (index < 0) currentSlideIndex = slides.length - 1;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
         }
 
-        function createHearts() {
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '❤️';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                document.body.appendChild(heart);
+        function changeSlide(direction) {
+            currentSlideIndex += direction;
+            showSlide(currentSlideIndex);
+        }
 
-                setTimeout(() => {
-                    heart.remove();
-                }, 4000);
-            }, 300);
+        function currentSlide(index) {
+            currentSlideIndex = index;
+            showSlide(currentSlideIndex);
+        }
+
+        setInterval(() => {
+            currentSlideIndex++;
+            showSlide(currentSlideIndex);
+        }, 4000);
+
+        function showSurprise() {
+            document.getElementById('surprisePopup').style.display = 'flex';
+        }
+
+        function closeSurprise() {
+            document.getElementById('surprisePopup').style.display = 'none';
         }
     </script>
 </body>
